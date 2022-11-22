@@ -3,7 +3,11 @@ import gspread
 
 
 def parse_date(raw_date: str) -> date:
-    return date(*map(int, raw_date.split('. ')))
+    if '. ' in raw_date:
+        return date(*map(int, raw_date.split('. ')))
+
+    if '-' in raw_date:
+        return date(*map(int, raw_date.split('-')))
 
 
 def main():
