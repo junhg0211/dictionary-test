@@ -19,12 +19,33 @@ def main():
     today = date.today()
 
     rows = sheet.get_all_values()[1:]
-    for i, row in enumerate(rows):
+    actual_rows = list()
+
+    for row in rows:
         if not row[0]:
             continue
 
         if today == parse_date(row[0]):
-            print(i, *row[1:5])
+            print(*row[1:5])
+            continue
+
+        if today in (parse_date(row[i]) for i in range(5, len(row), 2)):
+            actual_rows.append(row)
+
+    for i, row in enumerate(actual_rows):
+        print(f'{i/len(actual_rows)*100:.3f}%, {i} / {len(actual_rows)}\n')
+
+        for i in range(5, len(row), 2):
+            hanzi_to_meaning = i % 4 == 1
+            if parse_date(row[i]) == today and hanzi_to_meaning:
+                input(f'{i}. {parse_date(row[0])}, {row[1]}: ')
+                print(i, *row[1:5], sep='\t')
+                continue
+
+            if parse_date(row[i]) == today and not hanzi_to_meaning:
+                input(f'{i}. {parse_date(row[0])}, {row[3]}: ')
+                print(i, *row[1:5], sep='\t')
+                continue
 
 
 if __name__ == '__main__':
