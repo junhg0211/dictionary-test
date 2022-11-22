@@ -21,30 +21,30 @@ def main():
     rows = sheet.get_all_values()[1:]
     actual_rows = list()
 
-    for row in rows:
+    for i, row in enumerate(rows):
         if not row[0]:
             continue
 
         if today == parse_date(row[0]):
-            print(*row[1:5])
+            print(i+2, *row[1:5])
             continue
 
         if today in (parse_date(row[i]) for i in range(5, len(row), 2)):
-            actual_rows.append(row)
+            actual_rows.append((i+2, row))
 
-    for i, row in enumerate(actual_rows):
+    for i, (row_number, row) in enumerate(actual_rows):
         print(f'{i/len(actual_rows)*100:.3f}%, {i} / {len(actual_rows)}\n')
 
-        for i in range(5, len(row), 2):
-            hanzi_to_meaning = i % 4 == 1
-            if parse_date(row[i]) == today and hanzi_to_meaning:
-                input(f'{i}. {parse_date(row[0])}, {row[1]}: ')
-                print(i, *row[1:5], sep='\t')
+        for j in range(5, len(row), 2):
+            hanzi_to_meaning = j % 4 == 1
+            if parse_date(row[j]) == today and hanzi_to_meaning:
+                input(f'{row_number}. {parse_date(row[0])}, {row[1]}: ')
+                print(row_number, *row[1:5], sep='\t')
                 continue
 
-            if parse_date(row[i]) == today and not hanzi_to_meaning:
-                input(f'{i}. {parse_date(row[0])}, {row[3]}: ')
-                print(i, *row[1:5], sep='\t')
+            if parse_date(row[j]) == today and not hanzi_to_meaning:
+                input(f'{row_number}. {parse_date(row[0])}, {row[3]}: ')
+                print(row_number, *row[1:5], sep='\t')
                 continue
 
 
