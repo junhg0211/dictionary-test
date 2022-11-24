@@ -38,12 +38,12 @@ def main():
         for j in range(5, len(row), 2):
             hanzi_to_meaning = j % 4 == 1
             if parse_date(row[j]) == today and hanzi_to_meaning:
-                input(f'{row_number}. {parse_date(row[0])}, {row[1]}: ')
+                input(f'{row_number}. {parse_date(row[0])}, {row[1]} ({row[4]}): ')
                 print(row_number, *row[1:5], sep='\t')
                 continue
 
             if parse_date(row[j]) == today and not hanzi_to_meaning:
-                input(f'{row_number}. {parse_date(row[0])}, {row[3]}: ')
+                input(f'{row_number}. {parse_date(row[0])}, {row[3]} ({row[4]}): ')
                 print(row_number, *row[1:5], sep='\t')
                 continue
 
